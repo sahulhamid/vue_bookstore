@@ -18,7 +18,7 @@ export default {
 
     const getBooks = async () => {
       try {
-        const response = await fetch("http://localhost:3000/books");
+        const response = await fetch("https://my-json-server.typicode.com/sahulhamid/vue_bookstore_db/books");
         if (!response.ok) {
           throw new Error("SomeThing went Wrong");
         }
