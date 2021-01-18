@@ -1,18 +1,41 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <h1 class="heading">Book Show Room</h1>
+  <Books :books="books" />
+  
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import { ref } from "vue";
+import Books from "../components/Books";
 
 export default {
-  name: 'Home',
   components: {
-    HelloWorld
-  }
-}
+    Books,
+  },
+  setup() {
+    const books = ref([]);
+    const error = ref(null);
+
+    const getBooks = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/books");
+        if (!response.ok) {
+          throw new Error("SomeThing went Wrong");
+        }
+        const data = await response.json();
+        books.value = data;
+      } catch (err) {
+        error.value = err.message;
+      }
+    };
+    getBooks();
+    return { books, error };
+  },
+};
 </script>
+
+<style >
+.heading{
+  color: rgb(122, 250, 244)
+}
+</style>
