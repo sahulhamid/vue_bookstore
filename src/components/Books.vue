@@ -3,8 +3,8 @@
   <div class="all-books">
     <div v-for="book in filterBook" :key="book.id" class="book">
       <img :src="book.url" />
-       <span class="book-title">Title: {{book.title}}</span>
-      <span>Author: {{book.author}}</span>
+      <span class="book-title">Title: {{ book.title }}</span>
+      <span>Author: {{ book.author }}</span>
       <span class="price"> Price: ₹{{ book.price }}</span>
     </div>
   </div>
@@ -16,10 +16,14 @@ export default {
   props: ["books"],
   setup(props) {
     const input = ref("");
+    function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
     const filterBook = computed(() => {
-      return props.books.filter((book) =>
-       { return book.title.toLowerCase().includes(input.value)}
-      );
+      return props.books.filter((book) => {
+        return book.title.includes(capitalizeFirstLetter(input.value));
+      });
     });
 
     return { input, filterBook };
@@ -44,7 +48,7 @@ img {
   grid-template-columns: auto auto auto;
   grid-gap: 20px;
 }
-input{
+input {
   border: none;
   background: none;
   border: 2px solid black;
@@ -54,29 +58,28 @@ input{
   color: white;
   font-size: 20px;
 }
-span{
+span {
   display: block;
   color: rgb(216, 97, 0);
   text-transform: capitalize;
   letter-spacing: 1px;
 }
-.price{
+.price {
   color: green;
 }
-.book-title{
+.book-title {
   color: blueviolet;
 }
 
 @media screen and (max-width: 850px) {
-  .all-books{
+  .all-books {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media screen  and (max-width: 500px){
-  .all-books{
+@media screen and (max-width: 500px) {
+  .all-books {
     display: block;
   }
-  
 }
 </style>
